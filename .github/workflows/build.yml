@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+env:
+    DOTNETVERSION: 6.0.300
+    
+jobs:
+  buildWindows:
+    runs-on: windows-2022
+
+    env:
+      Solution_Path: Sample\Auth0MauiApp.sln
+    
+    steps:
+      - uses: actions/checkout@v2
+          
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Install .NET Workloads
+      run: dotnet workload install maui
+
+    - name: Install dependencies
+      run: dotnet restore $env:Solution_Path
+
+    - name: Build
+      run: dotnet build $env:Solution_Path --configuration Release --no-restore
+      
