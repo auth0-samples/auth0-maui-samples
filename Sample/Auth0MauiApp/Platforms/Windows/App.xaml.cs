@@ -24,7 +24,7 @@ namespace Auth0MauiApp.WinUI
         /// </summary>
         public App()
         {
-            if (WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation())
+            if (Auth0.OidcClient.Platforms.Windows.Activator.Default.CheckRedirectionActivation())
                 return;
 
             this.InitializeComponent();

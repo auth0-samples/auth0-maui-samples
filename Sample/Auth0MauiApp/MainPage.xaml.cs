@@ -1,5 +1,4 @@
 using Auth0.OidcClient;
-using Auth0.OidcClient.MAUI;
 using IdentityModel.OidcClient;
 using IdentityModel.OidcClient.Browser;
 
