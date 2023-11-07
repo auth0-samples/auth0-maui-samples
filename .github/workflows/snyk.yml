@@ -51,26 +51,18 @@ jobs:
       #     dotnet restore
       #     dotnet build
 
-      # Install Scoop, Snyk's Scoop bucket, and the Snyk CLI.
-      - shell: pwsh
-        run: |
-          New-Item -Path .\scoop -ItemType Directory
-          Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-          iwr get.scoop.sh -outfile 'install.ps1'
-          .\install.ps1 -RunAsAdmin -ScoopDir .\scoop
-          scoop --version
-          scoop bucket add snyk https://github.com/snyk/scoop-snyk
-          scoop install snyk
+      # Install Snyk
+      - run: npm install snyk -g
 
       # Check that project is registered with Snyk when triggered from main branch
       - if: github.ref == 'refs/heads/main'
         continue-on-error: true
-        run: .\scoop\snyk monitor
+        run: snyk monitor
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       # Report vulnerabilities
-      - run: .\scoop\snyk test
+      - run: snyk test
         working-directory: Sample
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
