@@ -21,8 +21,10 @@ runs:
 
     - name: Install .NET Workloads
       shell: pwsh
-      run: dotnet workload install maui
+      run: |
+        dotnet workload install maui
 
     - name: Build
       shell: pwsh
-      run: dotnet build $env:${{ inputs.solution-path }} --configuration Release
+      run: |
+        dotnet build ${{ inputs.solution-path }} --configuration Release
