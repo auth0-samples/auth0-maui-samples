@@ -23,5 +23,5 @@ jobs:
         with:
           dotnet-version: '7.0.402'
       - name: Build
-        run: dotnet restore $env:Solution_Path --configuration Release
+        run: dotnet restore $env:Solution_Path
       
