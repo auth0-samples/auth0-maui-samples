@@ -46,15 +46,16 @@ jobs:
         with:
           solution-path: Sample\Auth0MauiApp.sln
 
-      # Install Scoop
-      - run: pwsh -c "Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')"
+      - uses: snyk/actions/setup@master
 
-        # Install Snyk's scoop bucket
-      - run: scoop bucket add snyk https://github.com/snyk/scoop-snyk
+      # Check that project is registered with Snyk when triggered from main branch
+      - if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        run: snyk monitor
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      # Install Snyk's Windows CLI
-      - run: scoop install snyk
-
+      # Report vulnerabilities
       - run: snyk test
         working-directory: .\Sample\Auth0MauiApp.sln
         env:
