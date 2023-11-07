@@ -55,8 +55,7 @@ jobs:
       - shell: pwsh
         run: |
           Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-          iwr get.scoop.sh -outfile 'install.ps1'
-          .\install.ps1 -RunAsAdmin
+          iwr get.scoop.sh | iex
           scoop --version
           scoop bucket add snyk https://github.com/snyk/scoop-snyk
           scoop install snyk
@@ -64,12 +63,12 @@ jobs:
       # Check that project is registered with Snyk when triggered from main branch
       - if: github.ref == 'refs/heads/main'
         continue-on-error: true
-        run: ~\scoop\apps\snyk\current\snyk monitor
+        run: snyk monitor
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       # Report vulnerabilities
-      - run: ~\scoop\apps\snyk\current\snyk test
+      - run: snyk test
         working-directory: Sample
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
