@@ -48,8 +48,9 @@ jobs:
           dotnet-version: "7.0.402"
 
       - run: |
-          dotnet restore Sample\Auth0MauiApp.sln
-          dotnet build Sample\Auth0MauiApp.sln
+          dotnet restore
+          dotnet build
+        working-directory: Sample\Auth0MauiApp
 
       # Install Snyk
       - run: npm install snyk -g
