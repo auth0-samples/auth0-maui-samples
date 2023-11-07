@@ -6,9 +6,9 @@ inputs:
     description: The .NET version to use
     required: false
     default: '7.0.402'
-solution-path:
-    description: The path to the .sln solution file.
-    required: yes
+  solution-path:
+      description: The path to the .sln solution file.
+      required: yes
 
 runs:
   using: composite
