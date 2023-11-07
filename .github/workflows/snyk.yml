@@ -66,6 +66,6 @@ jobs:
       # Report vulnerabilities
       - shell: pwsh
         run: snyk test
-        working-directory: ./Sample/Auth0MauiApp.sln
+        working-directory: Sample\Auth0MauiApp.sln
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
