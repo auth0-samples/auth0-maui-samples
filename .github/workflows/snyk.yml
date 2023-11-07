@@ -42,13 +42,19 @@ jobs:
         # with:
         #   ref: ${{ github.event.pull_request.merge_commit_sha || github.ref }} # TODO Change this back
 
-      # - uses: ./.github/actions/build
+      # - name: Install .NET Core
+      #   uses: actions/setup-dotnet@v3
       #   with:
-      #     solution-path: Sample\Auth0MauiApp.sln
+      #     dotnet-version: "7.0.402"
+
+      # - run: |
+      #     dotnet restore
+      #     dotnet build
 
       # Install Scoop, Snyk's Scoop bucket, and the Snyk CLI.
       - shell: pwsh
         run: |
+          Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
           iwr get.scoop.sh -outfile 'install.ps1'
           .\install.ps1 -RunAsAdmin
           scoop --version
@@ -58,12 +64,12 @@ jobs:
       # Check that project is registered with Snyk when triggered from main branch
       - if: github.ref == 'refs/heads/main'
         continue-on-error: true
-        run: snyk monitor
+        run: ~\scoop\apps\snyk\current\snyk monitor
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       # Report vulnerabilities
-      - run: snyk test
+      - run: ~\scoop\apps\snyk\current\snyk test
         working-directory: Sample
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
