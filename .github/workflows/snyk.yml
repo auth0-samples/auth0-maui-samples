@@ -48,8 +48,8 @@ jobs:
           dotnet-version: "7.0.402"
 
       - run: |
-          dotnet restore
-          dotnet build
+          dotnet restore Sample\Auth0MauiApp.sln
+          dotnet build Sample\Auth0MauiApp.sln
 
       # Install Snyk
       - run: npm install snyk -g
@@ -58,6 +58,7 @@ jobs:
       - if: github.ref == 'refs/heads/main'
         continue-on-error: true
         run: snyk monitor
+        working-directory: Sample\Auth0MauiApp
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
