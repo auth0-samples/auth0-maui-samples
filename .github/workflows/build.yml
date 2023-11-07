@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, frederikprijck-patch-1 ]
   pull_request:
     branches: [ main ]
 
@@ -22,10 +22,6 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.0.402'
-
-      - name: Install .NET Workloads
-        run: dotnet workload install maui
-
       - name: Build
-        run: dotnet build $env:Solution_Path --configuration Release
+        run: dotnet restore $env:Solution_Path --configuration Release
       
