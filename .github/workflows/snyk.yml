@@ -45,7 +45,14 @@ jobs:
         with:
           solution-path: Sample\Auth0MauiApp.sln
 
-      - run: npm install -g snyk # windows-2022 includes Node 18.18.2 at time of writing, so we can use the pre-installed version
+      # Install Scoop
+      - run: pwsh -c "Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')"
+
+        # Install Snyk's scoop bucket
+      - run: scoop bucket add snyk https://github.com/snyk/scoop-snyk
+
+      # Install Snyk's Windows CLI
+      - run: scoop install snyk
 
       - run: snyk test
         working-directory: Sample\Auth0MauiApp.sln
