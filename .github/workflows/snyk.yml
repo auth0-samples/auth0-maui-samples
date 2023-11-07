@@ -39,8 +39,8 @@ jobs:
         run: exit 0 # Skip unnecessary test runs for dependabot and merge queues. Artifically flag as successful, as this is a required check for branch protection.
 
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.merge_commit_sha || github.ref }}
+        # with:
+        #   ref: ${{ github.event.pull_request.merge_commit_sha || github.ref }} # TODO Change this back
 
       - uses: ./.github/actions/build
         with:
@@ -56,6 +56,6 @@ jobs:
       - run: scoop install snyk
 
       - run: snyk test
-        working-directory: Sample\Auth0MauiApp.sln
+        working-directory: .\Sample\Auth0MauiApp.sln
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
