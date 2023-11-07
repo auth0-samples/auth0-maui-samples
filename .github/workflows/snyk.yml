@@ -42,21 +42,29 @@ jobs:
         # with:
         #   ref: ${{ github.event.pull_request.merge_commit_sha || github.ref }} # TODO Change this back
 
-      - uses: ./.github/actions/build
-        with:
-          solution-path: Sample\Auth0MauiApp.sln
+      # - uses: ./.github/actions/build
+      #   with:
+      #     solution-path: Sample\Auth0MauiApp.sln
 
-      - uses: snyk/actions/setup@master
+      - shell: pwsh
+        run: |
+          iwr get.scoop.sh -outfile 'install.ps1'
+          .\install.ps1 -RunAsAdmin
+          scoop --version
+          scoop bucket add snyk https://github.com/snyk/scoop-snyk
+          scoop install snyk
 
       # Check that project is registered with Snyk when triggered from main branch
       - if: github.ref == 'refs/heads/main'
         continue-on-error: true
+        shell: pwsh
         run: snyk monitor
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       # Report vulnerabilities
-      - run: snyk test
+      - shell: pwsh
+        run: snyk test
         working-directory: .\Sample\Auth0MauiApp.sln
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
