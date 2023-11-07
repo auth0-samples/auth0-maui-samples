@@ -31,7 +31,7 @@ jobs:
     needs: authorize
 
     name: Check for Vulnerabilities
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
 
     steps:
       - if: github.actor == 'dependabot[bot]' || github.event_name == 'merge_group'
@@ -45,8 +45,9 @@ jobs:
         with:
           solution-path: Sample\Auth0MauiApp.sln
 
-      - run: npm install -g snyk
+      - run: npm install -g snyk # windows-2022 includes Node 18.18.2 at time of writing, so we can use the pre-installed version
 
       - run: snyk test
+        working-directory: Sample\Auth0MauiApp.sln
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
