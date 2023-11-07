@@ -64,6 +64,6 @@ jobs:
 
       # Report vulnerabilities
       - run: snyk test
-        working-directory: Sample\Auth0MauiApp.sln
+        working-directory: Sample
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
