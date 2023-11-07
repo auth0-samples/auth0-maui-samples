@@ -58,14 +58,12 @@ jobs:
       # Check that project is registered with Snyk when triggered from main branch
       - if: github.ref == 'refs/heads/main'
         continue-on-error: true
-        shell: pwsh
         run: snyk monitor
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       # Report vulnerabilities
-      - shell: pwsh
-        run: snyk test
+      - run: snyk test
         working-directory: Sample\Auth0MauiApp.sln
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
