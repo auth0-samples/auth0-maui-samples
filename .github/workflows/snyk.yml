@@ -54,7 +54,7 @@ jobs:
       # Install Scoop, Snyk's Scoop bucket, and the Snyk CLI.
       - shell: pwsh
         run: |
-          Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
           iwr get.scoop.sh | iex
           scoop --version
           scoop bucket add snyk https://github.com/snyk/scoop-snyk
