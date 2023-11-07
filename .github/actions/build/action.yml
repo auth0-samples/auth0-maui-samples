@@ -1,0 +1,26 @@
+name: Build package
+description: Build the SDK package
+
+inputs:
+  dotnet-version:
+    description: The .NET version to use
+    required: false
+    default: '7.0.402'
+solution-path:
+    description: The path to the .sln solution file.
+    required: yes
+
+runs:
+  using: composite
+
+  steps:
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ inputs.dotnet-version }}
+
+    - name: Install .NET Workloads
+      run: dotnet workload install maui
+
+    - name: Build
+      run: dotnet build $env:${{ inputs.solution-path }} --configuration Release

@@ -1,4 +1,4 @@
-name: Semgrep
+name: Snyk
 
 on:
   merge_group:
@@ -28,13 +28,10 @@ jobs:
       - run: true
 
   check:
-    needs: authorize # Require approval before running on forked pull requests
+    needs: authorize
 
     name: Check for Vulnerabilities
     runs-on: ubuntu-latest
-
-    container:
-      image: returntocorp/semgrep
 
     steps:
       - if: github.actor == 'dependabot[bot]' || github.event_name == 'merge_group'
@@ -44,6 +41,12 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha || github.ref }}
 
-      - run: semgrep ci
+      - uses: ./.github/actions/build
+        with:
+          solution-path: Sample\Auth0MauiApp.sln
+
+      - run: npm install -g snyk
+
+      - run: snyk test
         env:
-          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
