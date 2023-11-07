@@ -42,14 +42,14 @@ jobs:
         # with:
         #   ref: ${{ github.event.pull_request.merge_commit_sha || github.ref }} # TODO Change this back
 
-      # - name: Install .NET Core
-      #   uses: actions/setup-dotnet@v3
-      #   with:
-      #     dotnet-version: "7.0.402"
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "7.0.402"
 
-      # - run: |
-      #     dotnet restore
-      #     dotnet build
+      - run: |
+          dotnet restore
+          dotnet build
 
       # Install Snyk
       - run: npm install snyk -g
@@ -63,6 +63,6 @@ jobs:
 
       # Report vulnerabilities
       - run: snyk test
-        working-directory: Sample
+        working-directory: Sample\Auth0MauiApp
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
