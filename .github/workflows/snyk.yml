@@ -54,6 +54,7 @@ jobs:
       # Install Scoop, Snyk's Scoop bucket, and the Snyk CLI.
       - shell: pwsh
         run: |
+          New-Item -Path .\scoop -ItemType Directory
           Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
           iwr get.scoop.sh -outfile 'install.ps1'
           .\install.ps1 -RunAsAdmin -ScoopDir .\scoop
