@@ -2,8 +2,7 @@ name: Snyk
 
 on:
   merge_group:
-  #pull_request_target: # TODO Change this back
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - synchronize
@@ -39,8 +38,8 @@ jobs:
         run: exit 0 # Skip unnecessary test runs for dependabot and merge queues. Artifically flag as successful, as this is a required check for branch protection.
 
       - uses: actions/checkout@v4
-        # with:
-        #   ref: ${{ github.event.pull_request.merge_commit_sha || github.ref }} # TODO Change this back
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.ref }}
 
       - name: Install .NET Core
         uses: actions/setup-dotnet@v3
