@@ -2,7 +2,8 @@ name: Semgrep
 
 on:
   merge_group:
-  pull_request_target:
+    #pull_request_target: # TODO Change this back
+  pull_request:
     types:
       - opened
       - synchronize
