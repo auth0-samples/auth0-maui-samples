@@ -61,7 +61,6 @@ jobs:
         continue-on-error: true
 
       # Report vulnerabilities
-      - working-directory: Sample\Auth0MauiApp
-        run: snyk test
+      - run: snyk test --file=Sample\Auth0MauiApp.sln
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
