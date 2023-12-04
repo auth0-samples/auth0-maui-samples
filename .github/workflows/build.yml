@@ -18,10 +18,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
       - name: Install .NET Core
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "7.0.402"
+          dotnet-version: "8"
 
       - name: Install .NET Workloads
         run: dotnet workload install maui
