@@ -59,7 +59,7 @@
 	<ItemGroup>
 		<PackageReference Include="IdentityModel.OidcClient" Version="5.2.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="Auth0.OidcClient.MAUI" Version="1.0.0-beta.1" />
+		<PackageReference Include="Auth0.OidcClient.MAUI" Version="1.0.0" />
 	</ItemGroup>
 
 </Project>
