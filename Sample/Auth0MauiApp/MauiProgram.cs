@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Auth0MauiApp
+namespace JobClick
 {
     public static class MauiProgram
     {

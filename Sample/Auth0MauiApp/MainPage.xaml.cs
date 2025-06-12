@@ -2,17 +2,17 @@ using Auth0.OidcClient;
 using IdentityModel.OidcClient;
 using IdentityModel.OidcClient.Browser;
 
-namespace Auth0MauiApp
+namespace JobClick
 {
     public partial class MainPage : ContentPage
     {
         Auth0Client client = new Auth0Client(new Auth0ClientOptions
         {
-            Domain = "",
-            ClientId = "",
+            Domain = "dev-jbrriuc5vyjmiwtx.us.auth0.com",
+            ClientId = "HHkjs4uACOc1O27m3v865SJqbMdAcEfZ",
             Scope = "openid profile email",
-            RedirectUri = "myapp://callback",
-            PostLogoutRedirectUri = "myapp://callback",
+            RedirectUri = "jobclick://callback",
+            PostLogoutRedirectUri = "jobclick://callback",
         });
 
         public MainPage()

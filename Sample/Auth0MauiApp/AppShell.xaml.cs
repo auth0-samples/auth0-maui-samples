@@ -1,4 +1,4 @@
-﻿namespace Auth0MauiApp
+﻿namespace JobClick
 {
     public partial class AppShell : Shell
     {

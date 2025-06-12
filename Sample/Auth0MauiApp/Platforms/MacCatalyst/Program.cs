@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace Auth0MauiApp
+namespace JobClick
 {
     public class Program
     {

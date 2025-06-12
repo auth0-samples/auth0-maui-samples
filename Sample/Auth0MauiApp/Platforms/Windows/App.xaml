@@ -1,8 +1,8 @@
 ﻿<maui:MauiWinUIApplication
-    x:Class="Auth0MauiApp.WinUI.App"
+    x:Class="JobClick.WinUI.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:maui="using:Microsoft.Maui"
-    xmlns:local="using:Auth0MauiApp.WinUI">
+    xmlns:local="using:JobClick.WinUI">
 
 </maui:MauiWinUIApplication>

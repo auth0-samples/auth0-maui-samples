@@ -1,36 +1,48 @@
-name: Build and Test
+name: Build and Deploy JobClick to Google Play
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    inputs:
+      track:
+        description: 'Play Store track to deploy (internal, alpha, beta, production)'
+        required: true
+        default: 'internal'
 
 jobs:
-  build:
-    name: Build Package
-    runs-on: windows-2022
-
-    env:
-      Solution_Path: Sample\Auth0MauiApp.sln
+  build-deploy:
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Install Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '11'
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.x'
 
-      - name: Install .NET Core
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "8"
+    - name: Decode keystore
+      run: |
+        mkdir -p $HOME/.keystore
+        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > $HOME/.keystore/jobclick.keystore
 
-      - name: Install .NET Workloads
-        run: dotnet workload install maui
+    - name: Restore dependencies
+      run: dotnet restore
 
-      - name: Build
-        run: dotnet build $env:Solution_Path --configuration Release
+    - name: Build Android AAB
+      run: dotnet publish JobClick.csproj -f net8.0-android -c Release -o publish \
+        /p:AndroidKeyStore=true \
+        /p:AndroidSigningKeyStore=$HOME/.keystore/jobclick.keystore \
+        /p:AndroidSigningKeyAlias=${{ secrets.KEY_ALIAS }} \
+        /p:AndroidSigningKeyPass=${{ secrets.KEY_PASS }} \
+        /p:AndroidSigningStorePass=${{ secrets.STORE_PASS }} \
+        /p:AndroidPackageFormat=aab
+
+    - name: Upload to Google Play
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_KEY_JSON }}
+        packageName: com.jobclick.app
+        releaseFiles: publish/*.aab
+        track: ${{ github.event.inputs.track }}
+        status: draft

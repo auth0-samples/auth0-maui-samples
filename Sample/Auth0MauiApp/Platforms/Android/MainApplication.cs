@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace Auth0MauiApp
+namespace JobClick
 {
     [Application]
     public class MainApplication : MauiApplication

@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Auth0MauiApp
+namespace JobClick
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate
