@@ -16,7 +16,7 @@ jobs:
       Solution_Path: Sample\Auth0MauiApp.sln
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install Java
         uses: actions/setup-java@v4
