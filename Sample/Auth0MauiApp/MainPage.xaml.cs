@@ -1,6 +1,6 @@
 using Auth0.OidcClient;
-using IdentityModel.OidcClient;
-using IdentityModel.OidcClient.Browser;
+using Duende.IdentityModel.OidcClient;
+using Duende.IdentityModel.OidcClient.Browser;
 
 namespace Auth0MauiApp
 {
